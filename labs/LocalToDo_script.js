@@ -1,3 +1,6 @@
+// Local storage to-do static application workshop
+
+// Get HTML document elements by class
 const taskForm = document.getElementById("task-form");
 const confirmCloseDialog = document.getElementById("confirm-close-dialog");
 const openTaskFormBtn = document.getElementById("open-task-form-btn");
@@ -11,17 +14,38 @@ const dateInput = document.getElementById("date-input");
 const descriptionInput = document.getElementById("description-input");
 
 const taskData = JSON.parse(localStorage.getItem("data")) || [];
+
+// Consider current task as an obj
 let currentTask = {};
 
 const removeSpecialChars = (val) => {
+
+  /* 
+    removes the special chars and single-quotes after trimming a value string
+    args:
+      - val : string containing foreign characters
+    returns;
+      - clean string void spl/single-quotes 
+  */
+
   return val.trim().replace(/[^A-Za-z0-9\-\s]/g, '')
 }
 
 const addOrUpdateTask = () => {
+
+  /*
+    Input title is not trimmed off white spaces,  alert box appears to input a title
+    args:
+      - None
+    returns:
+      - None with alert msg to provide a title
+  */
+ 
    if(!titleInput.value.trim()){
     alert("Please provide a title");
     return;
   }
+
   const dataArrIndex = taskData.findIndex((item) => item.id === currentTask.id);
   const taskObj = {
     id: `${titleInput.value.toLowerCase().split(" ").join("-")}-${Date.now()}`,
